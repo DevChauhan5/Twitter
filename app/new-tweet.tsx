@@ -1,4 +1,5 @@
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -17,8 +18,12 @@ const user = {
 };
 
 export default function NewTweet() {
+  const [text, setText] = useState("");
+  const router = useRouter();
   const onTweetPress = () => {
-    console.warn("Posting the tweet...");
+    console.warn("Posting the tweet:", text);
+    setText("");
+    router.back();
   };
   return (
     <View style={styles.container}>
@@ -33,6 +38,8 @@ export default function NewTweet() {
       <View style={styles.inputContainer}>
         <Image src={user.image} style={styles.image} />
         <TextInput
+          value={text}
+          onChangeText={setText}
           placeholder="What's Happening?"
           multiline
           numberOfLines={5}
@@ -48,6 +55,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     flex: 1,
+    paddingTop: 40,
   },
   buttonConatiner: {
     flexDirection: "row",
@@ -68,6 +76,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 5,
   },
   image: {
     width: 50,
